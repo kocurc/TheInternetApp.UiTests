@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using TheInternetApp.UiTests.Pages.HelpPages;
 
 namespace TheInternetApp.UiTests.Pages.InternalPages
 {

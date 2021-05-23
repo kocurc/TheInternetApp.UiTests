@@ -1,27 +1,23 @@
-﻿using System.IO;
-using System.Reflection;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
-namespace TheInternetApp.UiTests.Steps
+namespace TheInternetApp.UiTests.Steps.Regression
 {
     [Binding]
-    public class MainSteps
+    internal class MainSteps
     {
-        protected static IWebDriver Driver { get; set; }
+        protected static Application TheInternetApplication => new();
+
 
         [BeforeFeature]
         public static void RunBeforeFeature()
         {
-            Driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
         }
 
         [AfterFeature()]
         public static void RunAfterScenario()
         {
-            Driver.Close();
-            Driver.Dispose();
+            TheInternetApplication.CloseApplication();
         }
     }
 }
