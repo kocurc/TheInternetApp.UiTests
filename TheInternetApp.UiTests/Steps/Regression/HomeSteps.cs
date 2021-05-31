@@ -22,6 +22,12 @@ namespace TheInternetApp.UiTests.Steps.Regression
             Home = new HomePage(TheInternetApplication.Driver);
         }
 
+        [AfterScenario]
+        public void RunAfterScenario()
+        {
+            TheInternetApplication.CloseApplication();
+        }
+
         [Given(@"I have opened home page")]
         public void GivenIHaveOpenedHomePage()
         {

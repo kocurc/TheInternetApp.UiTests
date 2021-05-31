@@ -1,47 +1,38 @@
 ﻿using System;
-using System.Collections.Specialized;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Reflection;
 
 namespace TheInternetApp.UiTests
 {
     public sealed class ApplicationContext
     {
-        #region Sections
-
-        
-
-        #endregion
-
-        #region Settings
-
-        public string IsIncognitoSwitch { get; }
-        public string IsStartMaximizedSwitch { get; }
-        public string WindowSizeSwitch { get; }
-        public string IsUserMobileUserAgent { get; }
-
-        #endregion
+        public static ExeConfigurationFileMap ExeConfigurationFileMap { get; } = new() { ExeConfigFilename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TheInternetApp.UiTests.dll.config") };
+        public Configuration Configuration { get; set; } = ConfigurationManager.OpenMappedExeConfiguration(ExeConfigurationFileMap, ConfigurationUserLevel.None);
+        public string Browser { get; }
 
         public ApplicationContext()
         {
+            Browser = GetApplicationSetting("browser");
 
-        }
-
-        private static string GetApplicationSetting([NotNull] string section, [NotNull] string settingKey)
-        {
-            if (section == null)
+            if (Browser == null)
             {
-                throw new ArgumentNullException(nameof(section));
+                throw new KeyNotFoundException("Incorrect browser key in app config file.");
             }
-
+        }
+        
+        private string GetApplicationSetting([NotNull] string settingKey)
+        {
             if (settingKey == null)
             {
                 throw new ArgumentNullException(nameof(settingKey));
             }
 
-            var collection = ConfigurationManager.GetSection(section) as NameValueCollection;
-
-            return collection[settingKey];
+            return Configuration.AppSettings.Settings[settingKey].Value;
         }
     }
 }

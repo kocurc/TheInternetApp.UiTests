@@ -14,7 +14,7 @@
         public const string DigestAuthenticationLink = "digest_auth";
         public const string DisappearingElementsLink = "disappearing_elements";
         public const string DragAndDropLink = "drag_and_drop";
-        public const string DropdownLink = "dropdwon";
+        public const string DropdownLink = "dropdown";
         public const string DynamicContentLink = "dynamic_content";
         public const string DynamicControlsLink = "dynamic_controls";
         public const string DynamicLoadingLink = "dynamic_loading";

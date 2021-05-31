@@ -6,18 +6,5 @@ namespace TheInternetApp.UiTests.Steps.Regression
     internal class MainSteps
     {
         protected static Application TheInternetApplication => new();
-
-
-        [BeforeFeature]
-        public static void RunBeforeFeature()
-        {
-
-        }
-
-        [AfterFeature()]
-        public static void RunAfterScenario()
-        {
-            TheInternetApplication.CloseApplication();
-        }
     }
 }
