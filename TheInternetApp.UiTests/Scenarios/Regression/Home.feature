@@ -16,12 +16,12 @@ Scenario: Home page welcome header
 Scenario: Home page links header
 	Then Links header is 'Available Examples'
 
-#@regression
-#Scenario: Opening A/B Testing link
-	#When I click on 'A/B Testing' link
-	#Then 'abtest' page has been opened
+@regression
+Scenario: Opening A/B Testing link
+	When I click on 'A/B Testing' link
+	Then 'abtest' page has been opened
 
-#@regression
-#Scenario: Number of links to subpages
-	#Then There are '44' links to subpages
-	#And All links point to correct subpages
+@regression
+Scenario: Number of links to subpages
+	Then There are '44' links to subpages
+	And All links point to correct subpages
