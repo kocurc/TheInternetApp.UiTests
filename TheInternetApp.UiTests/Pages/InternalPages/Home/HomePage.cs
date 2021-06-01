@@ -11,7 +11,8 @@ namespace TheInternetApp.UiTests.Pages.InternalPages.Home
 {
     internal class HomePage : BasePage
     {
-        public const string ExpectedUrl = "http://localhost:7080/";
+        public const string ExpectedLocalUrl = "http://localhost:7080/";
+        public const string ExpectedRemoteUrl = "http://the-internet.herokuapp.com/";
 
         #region IWebElementsLinksToSubpages
 
@@ -89,7 +90,7 @@ namespace TheInternetApp.UiTests.Pages.InternalPages.Home
 
         public void OpenPage()
         {
-            Driver.Navigate().GoToUrl(ExpectedUrl);
+            Driver.Navigate().GoToUrl(ExpectedRemoteUrl);
         }
 
         public IWebElement GetSubPageLinkFromLinkText([NotNull] string linkName)
