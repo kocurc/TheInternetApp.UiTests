@@ -26,12 +26,27 @@ namespace TheInternetApp.UiTests
         }
         private void HandleBrowserContext()
         {
-            Driver = AppContext.Browser switch
+            /*Driver = AppContext.Browser switch
             {
                 "chrome" => new ChromeDriver(_binWorkingDirectory),
                 "firefox" => new FirefoxDriver(_binWorkingDirectory),
                 _ => throw new ArgumentOutOfRangeException(nameof(AppContext.Browser), "Browser key in config file is not supported.")
+            };*/
+            
+            Driver = AppContext.Browser switch
+            {
+                "chrome" => new ChromeDriver(_binWorkingDirectory, GetChromeOptions()),
+                "firefox" => new FirefoxDriver(_binWorkingDirectory),
+                _ => throw new ArgumentOutOfRangeException(nameof(AppContext.Browser), "Browser key in config file is not supported.")
             };
+        }
+
+        private static ChromeOptions GetChromeOptions()
+        {
+            ChromeOptions chromeOptions = new();
+            chromeOptions.AddArgument("--headless");
+
+            return chromeOptions;
         }
     }
 }
