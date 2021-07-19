@@ -4,6 +4,7 @@ using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
+using TheInternetApp.UiTests.Extensions;
 
 namespace TheInternetApp.UiTests
 {
@@ -11,8 +12,8 @@ namespace TheInternetApp.UiTests
     {
         private readonly string _binWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        public IWebDriver Driver { get; set; } 
-        public ApplicationContext AppContext { get; set; } = new();
+        public IWebDriver Driver { get; set; }
+        public ApplicationContext AppContext { get; init; } = new();
 
         public Application()
         {
@@ -23,7 +24,9 @@ namespace TheInternetApp.UiTests
         {
             Driver.Close();
             Driver.Dispose();
+            Driver.KillChromeDriverProcess();
         }
+
         private void HandleBrowserContext()
         {
             Driver = AppContext.Browser switch

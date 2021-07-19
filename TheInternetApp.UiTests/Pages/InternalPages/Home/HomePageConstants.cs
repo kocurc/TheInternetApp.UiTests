@@ -38,7 +38,7 @@
         public const string LargeDeepDomLink = "large";
         public const string MultipleWindowsLink = "windows";
         public const string NestedFramesLink = "nested_frames";
-        public const string NotificationMessagesLink = "notification_messages";
+        public const string NotificationMessagesLink = "notification_message";
         public const string RedirectLink = "redirector";
         public const string SecureFileDownloadLink = "download_secure";
         public const string ShadowDomLink = "shadowdom";

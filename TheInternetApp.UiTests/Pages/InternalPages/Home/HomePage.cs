@@ -88,7 +88,7 @@ namespace TheInternetApp.UiTests.Pages.InternalPages.Home
 
         }
 
-        public void OpenPage()
+        public override void OpenPage()
         {
             Driver.Navigate().GoToUrl(ExpectedRemoteUrl);
         }
@@ -113,17 +113,17 @@ namespace TheInternetApp.UiTests.Pages.InternalPages.Home
             return Driver.FindElement(By.XPath($"//a[contains(@href, '/{linkAddress}')]"));
         }
 
-        public void ClickOnSubPageLink([NotNull] string link)
+        public void ClickOnSubPageLink([NotNull] string linkText)
         {
-            if (link == null)
+            if (linkText == null)
             {
-                throw new ArgumentNullException(nameof(link));
+                throw new ArgumentNullException(nameof(linkText));
             }
 
-            GetSubPageLinkFromLinkAddress(link).Click();
+            GetSubPageLinkFromLinkText(linkText).Click();
         }
 
-        public T NavigateToSubPage<T>(string link) where T : ISubPage, new()
+        public T NavigateToSubPage<T>(string link) where T : Page, ISubPage, new()
         {
             ClickOnSubPageLink(link);
             Driver.SwitchToLastWindow();
@@ -136,145 +136,57 @@ namespace TheInternetApp.UiTests.Pages.InternalPages.Home
             return subPage;
         }
 
-        public T NavigateToSubPage<T>(SubPageType subPageType) where T : ISubPage, new()
+        // TODO Fix constants.
+        public T NavigateToSubPage<T>(SubPageType subPageType) where T : Page, ISubPage, new()
         {
-            switch (subPageType)
+            /*subPageType switch
             {
-                case SubPageType.AbTesting:
-                    ClickOnSubPageLink(HomePageConstants.AbTestLink);
-                    break;
-                case SubPageType.AddRemoveElements:
-                    ClickOnSubPageLink(HomePageConstants.AddRemoveElementsLink);
-                    break;
-                case SubPageType.BasicAuth:
-                    ClickOnSubPageLink(HomePageConstants.BasicAuthLink);
-                    break;
-                case SubPageType.BrokenImages:
-                    ClickOnSubPageLink(HomePageConstants.BrokenImagesLink);
-                    break;
-                case SubPageType.ChallengingDom:
-                    ClickOnSubPageLink(HomePageConstants.ChallengingDomLink);
-                    break;
-                case SubPageType.Checkboxes:
-                    ClickOnSubPageLink(HomePageConstants.CheckboxesLink);
-                    break;
-                case SubPageType.ContextMenu:
-                    ClickOnSubPageLink(HomePageConstants.ContextMenuLink);
-                    break;
-                case SubPageType.DigestAuthentication:
-                    ClickOnSubPageLink(HomePageConstants.DigestAuthenticationLink);
-                    break;
-                case SubPageType.DisappearingElements:
-                    ClickOnSubPageLink(HomePageConstants.DisappearingElementsLink);
-                    break;
-                case SubPageType.DragAndDrop:
-                    ClickOnSubPageLink(HomePageConstants.DragAndDropLink);
-                    break;
-                case SubPageType.DropDown:
-                    ClickOnSubPageLink(HomePageConstants.DropdownLink);
-                    break;
-                case SubPageType.DynamicContent:
-                    ClickOnSubPageLink(HomePageConstants.DynamicContentLink);
-                    break;
-                case SubPageType.DynamicControls:
-                    ClickOnSubPageLink(HomePageConstants.DynamicControlsLink);
-                    break;
-                case SubPageType.DynamicLoading:
-                    ClickOnSubPageLink(HomePageConstants.DynamicLoadingLink);
-                    break;
-                case SubPageType.EntryAd:
-                    ClickOnSubPageLink(HomePageConstants.EntryAdLink);
-                    break;
-                case SubPageType.ExitIntent:
-                    ClickOnSubPageLink(HomePageConstants.ExitIntentLink);
-                    break;
-                case SubPageType.FileDownload:
-                    ClickOnSubPageLink(HomePageConstants.FileDownloadLink);
-                    break;
-                case SubPageType.FileUpload:
-                    ClickOnSubPageLink(HomePageConstants.FileUploadLink);
-                    break;
-                case SubPageType.FloatingMenu:
-                    ClickOnSubPageLink(HomePageConstants.FloatingMenuLink);
-                    break;
-                case SubPageType.ForgotPassword:
-                    ClickOnSubPageLink(HomePageConstants.ForgotPasswordLink);
-                    break;
-                case SubPageType.FormAuthentication:
-                    ClickOnSubPageLink(HomePageConstants.FormAuthenticationLink);
-                    break;
-                case SubPageType.Frames:
-                    ClickOnSubPageLink(HomePageConstants.FramesLink);
-                    break;
-                case SubPageType.Geolocation:
-                    ClickOnSubPageLink(HomePageConstants.GeolocationLink);
-                    break;
-                case SubPageType.HorizontalSlider:
-                    ClickOnSubPageLink(HomePageConstants.HorizontalSliderLink);
-                    break;
-                case SubPageType.Hovers:
-                    ClickOnSubPageLink(HomePageConstants.HoversLink);
-                    break;
-                case SubPageType.InfiniteScroll:
-                    ClickOnSubPageLink(HomePageConstants.InfiniteScrollLink);
-                    break;
-                case SubPageType.Inputs:
-                    ClickOnSubPageLink(HomePageConstants.InputsLink);
-                    break;
-                case SubPageType.JqueryUiMenus:
-                    ClickOnSubPageLink(HomePageConstants.JqueryUiMenusLink);
-                    break;
-                case SubPageType.JavaScriptsAlerts:
-                    ClickOnSubPageLink(HomePageConstants.JavaScriptAlertsLink);
-                    break;
-                case SubPageType.JavaScriptOnLoadEventError:
-                    ClickOnSubPageLink(HomePageConstants.JavaScriptOnLoadEventErrorLink);
-                    break;
-                case SubPageType.KeyPresses:
-                    ClickOnSubPageLink(HomePageConstants.KeyPressesLink);
-                    break;
-                case SubPageType.LargeDeepDom:
-                    ClickOnSubPageLink(HomePageConstants.LargeDeepDomLink);
-                    break;
-                case SubPageType.MultipleWindows:
-                    ClickOnSubPageLink(HomePageConstants.MultipleWindowsLink);
-                    break;
-                case SubPageType.NestedFrames:
-                    ClickOnSubPageLink(HomePageConstants.NestedFramesLink);
-                    break;
-                case SubPageType.NotificationMessages:
-                    ClickOnSubPageLink(HomePageConstants.NotificationMessagesLink);
-                    break;
-                case SubPageType.RedirectLink:
-                    ClickOnSubPageLink(HomePageConstants.RedirectLink);
-                    break;
-                case SubPageType.SecureFileDownload:
-                    ClickOnSubPageLink(HomePageConstants.SecureFileDownloadLink);
-                    break;
-                case SubPageType.ShadowDom:
-                    ClickOnSubPageLink(HomePageConstants.ShadowDomLink);
-                    break;
-                case SubPageType.ShiftingContent:
-                    ClickOnSubPageLink(HomePageConstants.ShiftingContentLink);
-                    break;
-                case SubPageType.SlowResources:
-                    ClickOnSubPageLink(HomePageConstants.SlowResourcesLink);
-                    break;
-                case SubPageType.SortableDataTables:
-                    ClickOnSubPageLink(HomePageConstants.SortableDataTablesLink);
-                    break;
-                case SubPageType.StatusCodes:
-                    ClickOnSubPageLink(HomePageConstants.StatusCodesLink);
-                    break;
-                case SubPageType.Typos:
-                    ClickOnSubPageLink(HomePageConstants.TyposLink);
-                    break;
-                case SubPageType.WysiwygEditor:
-                    ClickOnSubPageLink(HomePageConstants.WysiwygEditorLink);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(subPageType), subPageType, null);
-            }
+                SubPageType.AbTesting => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.AddRemoveElements => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.BasicAuth => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.BrokenImages => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ChallengingDom => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Checkboxes => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ContextMenu => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DigestAuthentication => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DisappearingElements => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DragAndDrop => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DropDown => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DynamicContent => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DynamicControls => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.DynamicLoading => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.EntryAd => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ExitIntent => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.FileDownload => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.FileUpload => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.FloatingMenu => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ForgotPassword => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.FormAuthentication => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Frames => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Geolocation => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.HorizontalSlider => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Hovers => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.InfiniteScroll => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Inputs => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.JqueryUiMenus => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.JavaScriptsAlerts => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.JavaScriptOnLoadEventError => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.KeyPresses => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.LargeDeepDom => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.MultipleWindows => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.NestedFrames => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.NotificationMessages => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.RedirectLink => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.SecureFileDownload => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ShadowDom => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.ShiftingContent => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.SlowResources => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.SortableDataTables => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.StatusCodes => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.Typos => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                SubPageType.WysiwygEditor => ClickOnSubPageLink(HomePageConstants.AbTestLink),
+                _ => throw new ArgumentOutOfRangeException(nameof(subPageType), subPageType, null)
+            };*/
 
             Driver.SwitchToLastWindow();
 

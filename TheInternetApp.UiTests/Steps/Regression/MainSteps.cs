@@ -6,5 +6,11 @@ namespace TheInternetApp.UiTests.Steps.Regression
     internal class MainSteps
     {
         protected static Application TheInternetApplication => new();
+
+        [AfterScenario]
+        public void RunAfterScenario()
+        {
+            TheInternetApplication.CloseApplication();
+        }
     }
 }

@@ -21,5 +21,10 @@ namespace TheInternetApp.UiTests.Pages.HelpPages
         {
 
         }
+
+        public virtual void OpenPage()
+        {
+
+        }
     }
 }

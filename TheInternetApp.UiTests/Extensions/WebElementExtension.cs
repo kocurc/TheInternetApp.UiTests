@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using System.Linq;
+using OpenQA.Selenium;
 
 namespace TheInternetApp.UiTests.Extensions
 {
@@ -6,7 +7,7 @@ namespace TheInternetApp.UiTests.Extensions
     {
         public static bool DoesAnchorWebElementPointToHref(this IWebElement webElement, string hrefValue)
         {
-            return webElement.GetAttribute("href").Equals(hrefValue);
+            return webElement.GetAttribute("href").TrimEnd('/').Split('/').Last().Equals(hrefValue);
         }
     }
 }

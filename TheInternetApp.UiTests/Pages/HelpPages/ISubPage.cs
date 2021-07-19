@@ -1,9 +1,7 @@
-﻿using OpenQA.Selenium;
-
-namespace TheInternetApp.UiTests.Pages
+﻿namespace TheInternetApp.UiTests.Pages.HelpPages
 {
     public interface ISubPage
     {
-        void Initialize(IWebDriver driver);
+
     }
 }
